@@ -57,4 +57,25 @@ public class Event {
     }
 
     // endregion
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null)
+            return false;
+
+        if (obj == this)
+            return true;
+
+        if (obj instanceof Event) {
+
+            Event otherEvent = (Event) obj;
+
+            return (otherEvent.getId() == this.getId() &&
+                    otherEvent.getName().equals(this.getName()) &&
+                    otherEvent.getDescription().equals(this.getDescription()));
+        }
+
+        return false;
+    }
 }

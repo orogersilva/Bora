@@ -22,10 +22,19 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class EventBllTest {
 
+    // region INSTANCE VARIABLES
+
+    private static EventDal eventDalMock;
+    private static EventBll eventBll;
+
+    // endregion
+
     // region SETUP TEST METHODS
     @BeforeClass
     public static void setUpClass() {
 
+        eventDalMock = mock(EventDal.class);
+        eventBll = new EventBll(eventDalMock);
     }
 
     @Before
@@ -43,9 +52,6 @@ public class EventBllTest {
         // ARRANGE
         final long NOT_VALID_EVENT_ID = -1;
 
-        EventDal eventDalMock = mock(EventDal.class);
-        EventBll eventBll = new EventBll(eventDalMock);
-
         when(eventDalMock.getEvent(NOT_VALID_EVENT_ID)).thenReturn(null);
 
         // ACT
@@ -61,9 +67,6 @@ public class EventBllTest {
 
         // ARRANGE
         final long NOT_FOUND_EVENT_ID = 1;
-
-        EventDal eventDalMock = mock(EventDal.class);
-        EventBll eventBll = new EventBll(eventDalMock);
 
         when(eventDalMock.getEvent(NOT_FOUND_EVENT_ID)).thenReturn(null);
 
@@ -85,9 +88,6 @@ public class EventBllTest {
 
         final String ERROR_MESSAGE = "Expected event is not equal to retrieved event.";
 
-        EventDal eventDalMock = mock(EventDal.class);
-        EventBll eventBll = new EventBll(eventDalMock);
-
         Event expectedEvent = new Event(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
 
         when(eventDalMock.getEvent(EVENT_ID)).thenReturn(expectedEvent);
@@ -101,15 +101,12 @@ public class EventBllTest {
 
     @SmallTest
     @Test
-    public void insertEvent_whenIdIsNotValid_returnsInsertErrorStatus() {
+    public void insertEvent_whenIdIsNotValid_returnsFalse() {
 
         // ARRANGE
         final long NOT_VALID_EVENT_ID = -1;
         final String EVENT_NAME = "Show do Guri de Uruguaiana";
         final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
-
-        EventDal eventDalMock = mock(EventDal.class);
-        EventBll eventBll = new EventBll(eventDalMock);
 
         when(eventDalMock.insertEvent(NOT_VALID_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(false);
 
@@ -122,13 +119,20 @@ public class EventBllTest {
 
     @SmallTest
     @Test
-    public void insertEvent_whenIdIsValid_doNothing() {
+    public void insertEvent_whenIdIsValid_returnTrue() {
 
         // ARRANGE
+        final long EVENT_ID = 1;
+        final String EVENT_NAME = "Show do Guri de Uruguaiana";
+        final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
+
+        when(eventDalMock.insertEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(true);
 
         // ACT
+        boolean retrievedStatus = eventBll.insertEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
 
         // ASSERT
+        assertTrue(retrievedStatus);
     }
 
     // endregion
@@ -141,6 +145,9 @@ public class EventBllTest {
 
     @AfterClass
     public static void tearDownClass() {
+
+        eventBll = null;
+        eventDalMock = null;
     }
 
     // endregion

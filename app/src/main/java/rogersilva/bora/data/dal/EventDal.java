@@ -49,11 +49,22 @@ public class EventDal {
 
         values.put(EventEntry.COLUMN_NAME_ID, id);
         values.put(EventEntry.COLUMN_NAME_NAME, name);
+        values.put(EventEntry.COLUMN_NAME_DESCRIPTION, description);
 
         long newRowId = db.insert(EventEntry.TABLE_NAME, null, values);
 
         db.close();
 
         return (newRowId > 0) ? true : false;
+    }
+
+    public boolean updateEvent(long id, String name, String description) {
+
+        return false;
+    }
+
+    public boolean deleteEvent(long id) {
+
+        return false;
     }
 }

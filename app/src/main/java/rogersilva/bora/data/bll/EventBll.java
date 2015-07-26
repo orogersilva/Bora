@@ -1,6 +1,9 @@
 package rogersilva.bora.data.bll;
 
+import android.content.Context;
+
 import rogersilva.bora.data.dal.EventDal;
+import rogersilva.bora.data.helpers.DatabaseHelper;
 import rogersilva.bora.models.Event;
 
 /**
@@ -16,9 +19,14 @@ public class EventBll {
 
     // region CONSTRUCTORS
 
+    public EventBll(Context context) {
+
+        mEventDal = new EventDal(new DatabaseHelper(context));
+    }
+
     public EventBll(EventDal eventDal) {
 
-        this.mEventDal = eventDal;
+        mEventDal = eventDal;
     }
 
     // endregion
@@ -31,5 +39,15 @@ public class EventBll {
     public boolean insertEvent(long id, String name, String description) {
 
         return mEventDal.insertEvent(id, name, description);
+    }
+
+    public boolean updateEvent(long id, String name, String description) {
+
+        return mEventDal.updateEvent(id, name, description);
+    }
+
+    public boolean deleteEvent(long id) {
+
+        return mEventDal.deleteEvent(id);
     }
 }

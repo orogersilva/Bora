@@ -33,7 +33,7 @@ public class Event {
 
     public void setId(long id) {
 
-        this.mId = id;
+        mId = id;
     }
 
     public String getName() {
@@ -43,7 +43,7 @@ public class Event {
 
     public void setName(String name) {
 
-        this.mName = name;
+        mName = name;
     }
 
     public String getDescription() {
@@ -53,7 +53,7 @@ public class Event {
 
     public void setDescription(String description) {
 
-        this.mDescription = description;
+        mDescription = description;
     }
 
     // endregion

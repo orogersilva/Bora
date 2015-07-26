@@ -25,15 +25,11 @@ public class EventBll {
 
     public Event getEvent(long id) {
 
-        // Id must be greater than zero
-        if (id <= 0)
-            return null;
-
         return mEventDal.getEvent(id);
     }
 
-    public void insertEvent(long id, String name, String description) {
+    public boolean insertEvent(long id, String name, String description) {
 
-        mEventDal.insertEvent(id, name, description);
+        return mEventDal.insertEvent(id, name, description);
     }
 }

@@ -30,16 +30,18 @@ public class EventDal {
 
     public Event getEvent(long id) {
 
+        // Id must be greater than zero
+        if (id <= 0)
+            return null;
+
         return null;
     }
 
-    public long insertEvent(long id, String name, String description) {
-
-        final int INVALID_ROW_ID = -1;
+    public boolean insertEvent(long id, String name, String description) {
 
         // Id must be greater than zero and name cannot be null or empty
         if (id <= 0 || StringUtils.isNullOrEmpty(name))
-            return INVALID_ROW_ID;
+            return false;
 
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
@@ -52,6 +54,6 @@ public class EventDal {
 
         db.close();
 
-        return newRowId;
+        return (newRowId > 0) ? true : false;
     }
 }

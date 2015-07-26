@@ -1,19 +1,46 @@
 package rogersilva.bora.activities;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import rogersilva.bora.R;
+import rogersilva.bora.fragments.HomeFragment;
+import rogersilva.bora.fragments.HomeFragment.OnEventCreationDispatchListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity
+    implements OnEventCreationDispatchListener{
+
+    // region IMPLEMENTED INTERFACE METHODS
+
+    @Override
+    public void onEventCreationDispatched() {
+    }
+
+    // endregion
+
+    // region ACTIVITY LIFECYCLE METHODS
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        HomeFragment homeFragment = new HomeFragment();
+
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, homeFragment);
+        fragmentTransaction.addToBackStack(null);
+
+        fragmentTransaction.commit();
     }
+
+    // endregion
+
+    // region MENU HANDLING METHODS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -36,4 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    // endregion
 }

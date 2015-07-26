@@ -1,6 +1,9 @@
 <resources>
+
     <string name="app_name">Bora</string>
 
+    <string name="create_event">Create event</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
 </resources>

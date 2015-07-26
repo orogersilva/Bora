@@ -28,23 +28,11 @@ public class EventDal {
 
     // endregion
 
-    /**
-     * Get event by id
-     * @param id
-     * @return Event object
-     */
     public Event getEvent(long id) {
 
         return null;
     }
 
-    /**
-     * Insert event on database
-     * @param id
-     * @param name
-     * @param description
-     * @return Row id
-     */
     public long insertEvent(long id, String name, String description) {
 
         final int INVALID_ROW_ID = -1;

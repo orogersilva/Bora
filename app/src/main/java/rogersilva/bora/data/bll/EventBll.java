@@ -10,7 +10,7 @@ public class EventBll {
 
     // region INSTANCE VARIABLES
 
-    private EventDal eventDal;
+    private EventDal mEventDal;
 
     // endregion
 
@@ -18,18 +18,22 @@ public class EventBll {
 
     public EventBll(EventDal eventDal) {
 
-        this.eventDal = eventDal;
+        this.mEventDal = eventDal;
     }
 
     // endregion
 
     public Event getEvent(long id) {
 
-        return eventDal.getEvent(id);
+        // Id must be greater than zero
+        if (id <= 0)
+            return null;
+
+        return mEventDal.getEvent(id);
     }
 
     public void insertEvent(long id, String name, String description) {
 
-        eventDal.insertEvent(id, name, description);
+        mEventDal.insertEvent(id, name, description);
     }
 }

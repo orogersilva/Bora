@@ -95,6 +95,29 @@ public class EventBllTest {
         assertEquals(ERROR_MESSAGE, expectedEvent, retrievedEvent);
     }
 
+    @SmallTest
+    @Test
+    public void insertEvent_whenIdIsNotValid_returnsException() {
+
+        // ARRANGE
+
+
+        // ACT
+
+        // ASSERT
+    }
+
+    @SmallTest
+    @Test
+    public void insertEvent_whenIdIsValid_doNothing() {
+
+        // ARRANGE
+
+        // ACT
+
+        // ASSERT
+    }
+
     // endregion
 
     // region TEARDOWN TEST METHODS

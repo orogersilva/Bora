@@ -7,9 +7,9 @@ public class Event {
 
     // region INSTANCE VARIABLES
 
-    private long id;
-    private String name;
-    private String description;
+    private long mId;
+    private String mName;
+    private String mDescription;
 
     // endregion
 
@@ -28,32 +28,32 @@ public class Event {
 
     public long getId() {
 
-        return id;
+        return mId;
     }
 
     public void setId(long id) {
 
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
 
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
 
-        this.name = name;
+        this.mName = name;
     }
 
     public String getDescription() {
 
-        return description;
+        return mDescription;
     }
 
     public void setDescription(String description) {
 
-        this.description = description;
+        this.mDescription = description;
     }
 
     // endregion

@@ -1,6 +1,7 @@
 package rogersilva.bora.data.dal;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import rogersilva.bora.data.contracts.EventContract.EventEntry;
@@ -34,7 +35,37 @@ public class EventDal {
         if (id <= 0)
             return null;
 
-        return null;
+        SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+        String selection = EventEntry.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(id)
+        };
+
+        Cursor c = db.query(EventEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        c.moveToFirst();
+
+        Event retrievedEvent;
+
+        try {
+
+            long eventId = c.getLong(c.getColumnIndexOrThrow(EventEntry.COLUMN_NAME_ID));
+            String eventName = c.getString(c.getColumnIndexOrThrow(EventEntry.COLUMN_NAME_NAME));
+            String eventDescription = c.getString(c.getColumnIndexOrThrow(EventEntry.COLUMN_NAME_DESCRIPTION));
+
+            retrievedEvent = new Event(eventId, eventName, eventDescription);
+        }
+        catch (IllegalArgumentException e) {
+
+            retrievedEvent = null;
+        }
+        finally {
+
+            c.close();
+            db.close();
+        }
+
+        return retrievedEvent;
     }
 
     public boolean insertEvent(long id, String name, String description) {
@@ -60,11 +91,44 @@ public class EventDal {
 
     public boolean updateEvent(long id, String name, String description) {
 
-        return false;
+        // Id must be greater than zero
+        if (id <= 0)
+            return false;
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put(EventEntry.COLUMN_NAME_NAME, name);
+        values.put(EventEntry.COLUMN_NAME_DESCRIPTION, description);
+
+        String selection = EventEntry.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(id)
+        };
+
+        int affectedRows = db.update(EventEntry.TABLE_NAME, values, selection, selectionArgs);
+
+        return ((affectedRows > 0) ? true : false);
     }
 
     public boolean deleteEvent(long id) {
 
-        return false;
+        // Id must be greater than zero
+        if (id <= 0)
+            return false;
+
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        String selection = EventEntry.COLUMN_NAME_ID + " = ?";
+        String[] selectionArgs = {
+                String.valueOf(id)
+        };
+
+        int deletedRows = db.delete(EventEntry.TABLE_NAME, selection, selectionArgs);
+
+        db.close();
+
+        return ((deletedRows > 0) ? true : false);
     }
 }

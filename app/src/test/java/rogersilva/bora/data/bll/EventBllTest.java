@@ -27,6 +27,14 @@ public class EventBllTest {
     private static EventDal eventDalMock;
     private static EventBll eventBll;
 
+    private final long NOT_VALID_EVENT_ID = -1;
+    private final long NOT_FOUND_EVENT_ID = 1;
+    private final long EVENT_ID = 1;
+
+    private final String EVENT_NAME = "Show do Guri de Uruguaiana";
+    private final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
+
+
     // endregion
 
     // region SETUP TEST METHODS
@@ -50,8 +58,6 @@ public class EventBllTest {
     public void getEvent_whenIdIsNotValid_returnsNull() {
 
         // ARRANGE
-        final long NOT_VALID_EVENT_ID = -1;
-
         when(eventDalMock.getEvent(NOT_VALID_EVENT_ID)).thenReturn(null);
 
         // ACT
@@ -66,8 +72,6 @@ public class EventBllTest {
     public void getEvent_whenIdIsNotFound_returnsNull() {
 
         // ARRANGE
-        final long NOT_FOUND_EVENT_ID = 1;
-
         when(eventDalMock.getEvent(NOT_FOUND_EVENT_ID)).thenReturn(null);
 
         // ACT
@@ -82,10 +86,6 @@ public class EventBllTest {
     public void getEvent_whenIdIsFound_returnsEvent() {
 
         // ARRANGE
-        final long EVENT_ID = 1;
-        final String EVENT_NAME = "Show do Guri de Uruguaiana";
-        final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
-
         final String ERROR_MESSAGE = "Expected event is not equal to retrieved event.";
 
         Event expectedEvent = new Event(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
@@ -104,10 +104,6 @@ public class EventBllTest {
     public void insertEvent_whenIdIsNotValid_returnsFalse() {
 
         // ARRANGE
-        final long NOT_VALID_EVENT_ID = -1;
-        final String EVENT_NAME = "Show do Guri de Uruguaiana";
-        final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
-
         when(eventDalMock.insertEvent(NOT_VALID_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(false);
 
         // ACT
@@ -119,17 +115,97 @@ public class EventBllTest {
 
     @SmallTest
     @Test
-    public void insertEvent_whenIdIsValid_returnTrue() {
+    public void insertEvent_whenIdIsFound_returnTrue() {
 
         // ARRANGE
-        final long EVENT_ID = 1;
-        final String EVENT_NAME = "Show do Guri de Uruguaiana";
-        final String EVENT_DESCRIPTION = "Um show para ficar marcado na história do planeta Terra!!!";
-
         when(eventDalMock.insertEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(true);
 
         // ACT
         boolean retrievedStatus = eventBll.insertEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
+
+        // ASSERT
+        assertTrue(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void updateEvent_whenIdIsnotValid_returnsFalse() {
+
+        // ARRANGE
+        when(eventDalMock.updateEvent(NOT_VALID_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(false);
+
+        // ACT
+        boolean retrievedStatus = eventBll.updateEvent(NOT_VALID_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
+
+        // ASSERT
+        assertFalse(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void updateEvent_whenIdIsNotFound_returnsFalse() {
+
+        // ARRANGE
+        when(eventDalMock.updateEvent(NOT_FOUND_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(false);
+
+        // ACT
+        boolean retrievedStatus = eventBll.updateEvent(NOT_FOUND_EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
+
+        // ASSERT
+        assertFalse(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void updateEvent_whenIdIsFound_returnsTrue() {
+
+        // ARRANGE
+        when(eventDalMock.updateEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION)).thenReturn(true);
+
+        // ACT
+        boolean retrievedStatus = eventBll.updateEvent(EVENT_ID, EVENT_NAME, EVENT_DESCRIPTION);
+
+        // ASSERT
+        assertTrue(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void deleteEvent_whenIdIsNotValid_returnsFalse() {
+
+        // ARRANGE
+        when(eventDalMock.deleteEvent(NOT_VALID_EVENT_ID)).thenReturn(false);
+
+        // ACT
+        boolean retrievedStatus = eventBll.deleteEvent(NOT_VALID_EVENT_ID);
+
+        // ASSERT
+        assertFalse(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void deleteEvent_whenIdIsNotFound_returnsFalse() {
+
+        // ARRANGE
+        when(eventDalMock.deleteEvent(NOT_FOUND_EVENT_ID)).thenReturn(false);
+
+        // ACT
+        boolean retrievedStatus = eventBll.deleteEvent(NOT_FOUND_EVENT_ID);
+
+        // ASSERT
+        assertFalse(retrievedStatus);
+    }
+
+    @SmallTest
+    @Test
+    public void deleteEvent_whenIdIsFound_returnsTrue() {
+
+        // ARRANGE
+        when(eventDalMock.deleteEvent(EVENT_ID)).thenReturn(true);
+
+        // ACT
+        boolean retrievedStatus = eventBll.deleteEvent(EVENT_ID);
 
         // ASSERT
         assertTrue(retrievedStatus);

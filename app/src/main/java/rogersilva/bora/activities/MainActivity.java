@@ -1,6 +1,7 @@
 package rogersilva.bora.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,15 +9,25 @@ import android.view.MenuItem;
 
 import rogersilva.bora.R;
 import rogersilva.bora.fragments.HomeFragment;
-import rogersilva.bora.fragments.HomeFragment.OnEventCreationDispatchListener;
+import rogersilva.bora.interfaces.OnFragmentTransactionListener;
 
 public class MainActivity extends Activity
-    implements OnEventCreationDispatchListener{
+    implements OnFragmentTransactionListener {
+
+    // region INSTANCE VARIABLES
+
+    // endregion
 
     // region IMPLEMENTED INTERFACE METHODS
 
     @Override
-    public void onEventCreationDispatched() {
+    public void goTo(Fragment targetFragment) {
+
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, targetFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     // endregion
@@ -29,13 +40,7 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        HomeFragment homeFragment = new HomeFragment();
-
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container, homeFragment);
-        fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
+        goTo(new HomeFragment());
     }
 
     // endregion

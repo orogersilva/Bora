@@ -5,17 +5,15 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import rogersilva.bora.R;
 import rogersilva.bora.interfaces.OnFragmentTransactionListener;
 
 /**
- * Created by RogerSilva on 7/26/2015.
+ * Created by RogerSilva on 7/28/2015.
  */
-public class HomeFragment extends Fragment {
+public class EventCreationFragment extends Fragment {
 
     // region INSTANCE VARIABLES
 
@@ -43,19 +41,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
-
-        Button createEventButton = (Button) fragmentView.findViewById(R.id.create_event_button);
-        createEventButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                mTransactionListener.goTo(new EventCreationFragment());
-            }
-        });
-
-        return fragmentView;
+        return inflater.inflate(R.layout.fragment_event_creation, container, false);
     }
 
     // endregion

@@ -2,5 +2,11 @@
 <resources>
 
     <string name="create_event">Criar evento</string>
+    <string name="date">Data</string>
+    <string name="description">Descrição</string>
+    <string name="name">Nome</string>
+    <string name="place">Lugar</string>
+    <string name="publish_event">Publicar</string>
+    <string name="time">Horário</string>
 
 </resources>

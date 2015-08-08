@@ -19,21 +19,27 @@
                 android:id="@+id/event_name_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/name"/>
+                android:hint="@string/name"
+                android:background="@drawable/edittext_default_bg"
+                style="@style/Texts.EditTexts"/>
 
             <!-- Event description field -->
             <EditText
                 android:id="@+id/event_description_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/description"/>
+                android:hint="@string/description"
+                android:background="@drawable/edittext_default_bg"
+                style="@style/Texts.EditTexts"/>
 
             <!-- Event place field -->
             <EditText
                 android:id="@+id/event_place_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/place"/>
+                android:hint="@string/place"
+                android:background="@drawable/edittext_default_bg"
+                style="@style/Texts.EditTexts"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -46,7 +52,9 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="@string/date"/>
+                    android:hint="@string/date"
+                    android:background="@drawable/edittext_default_bg"
+                    style="@style/Texts.EditTexts"/>
 
                 <!-- Event time field -->
                 <EditText
@@ -54,7 +62,9 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:hint="@string/time"/>
+                    android:hint="@string/time"
+                    android:background="@drawable/edittext_default_bg"
+                    style="@style/Texts.EditTexts"/>
 
             </LinearLayout>
 

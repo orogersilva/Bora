@@ -1,9 +1,10 @@
 package rogersilva.bora.activities;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,8 +12,10 @@ import rogersilva.bora.R;
 import rogersilva.bora.fragments.HomeFragment;
 import rogersilva.bora.interfaces.OnFragmentTransactionListener;
 
-public class MainActivity extends Activity
+public class MainActivity extends ActionBarActivity
     implements OnFragmentTransactionListener {
+
+    public static final String TAG = "MainActivity";
 
     // region INSTANCE VARIABLES
 
@@ -21,12 +24,12 @@ public class MainActivity extends Activity
     // region IMPLEMENTED INTERFACE METHODS
 
     @Override
-    public void goTo(Fragment targetFragment) {
+    public void goTo(Fragment targetFragment, String tag) {
 
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, targetFragment)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit();
     }
 
@@ -40,12 +43,20 @@ public class MainActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        goTo(new HomeFragment());
+        goTo(new HomeFragment(), HomeFragment.TAG);
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        Log.d(TAG, TAG + " onResumed.");
     }
 
     // endregion
 
-    // region MENU HANDLING METHODS
+    // region OVERRIDE METHODS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,6 +78,15 @@ public class MainActivity extends Activity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        getFragmentManager().popBackStack();
+
+        if (getFragmentManager().getBackStackEntryCount() == 1)
+            finish();
     }
 
     // endregion

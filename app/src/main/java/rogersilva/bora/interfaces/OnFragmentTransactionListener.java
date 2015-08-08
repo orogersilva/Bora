@@ -7,5 +7,5 @@ import android.app.Fragment;
  */
 public interface OnFragmentTransactionListener {
 
-    public void goTo(Fragment targetFragment);
+    public void goTo(Fragment targetFragment, String tag);
 }

@@ -3,6 +3,7 @@ package rogersilva.bora.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,8 @@ import rogersilva.bora.interfaces.OnFragmentTransactionListener;
  * Created by RogerSilva on 7/26/2015.
  */
 public class HomeFragment extends Fragment {
+
+    public static final String TAG = "HomeFragment";
 
     // region INSTANCE VARIABLES
 
@@ -51,11 +54,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                mTransactionListener.goTo(new EventCreationFragment());
+                mTransactionListener.goTo(new EventCreationFragment(), EventCreationFragment.TAG);
             }
         });
 
         return fragmentView;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        Log.d(TAG, TAG + " onResumed.");
     }
 
     // endregion

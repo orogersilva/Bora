@@ -5,32 +5,23 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Texts" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:inputType">textCapCharacters</item>
+    <style name="EditTexts" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
     </style>
 
-    <style name="Numbers" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="EditTexts.Texts">
+        <item name="android:inputType">text</item>
+        <item name="android:digits">abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</item>
+    </style>
+
+    <style name="EditTexts.Numbers">
         <item name="android:inputType">number</item>
-    </style>
-
-    <style name="Texts.EditTexts">
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
-    </style>
-
-    <style name="Numbers.EditTexts">
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:layout_marginRight">10dp</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
     </style>
 
 </resources>

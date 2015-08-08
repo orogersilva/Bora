@@ -21,7 +21,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name"
                 android:background="@drawable/edittext_default_bg"
-                style="@style/Texts.EditTexts"/>
+                style="@style/EditTexts.Texts"
+                android:maxLength="60"
+                android:singleLine="true"/>
 
             <!-- Event description field -->
             <EditText
@@ -30,7 +32,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/description"
                 android:background="@drawable/edittext_default_bg"
-                style="@style/Texts.EditTexts"/>
+                style="@style/EditTexts.Texts"
+                android:maxLength="200"
+                android:lines="4"/>
 
             <!-- Event place field -->
             <EditText
@@ -39,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/place"
                 android:background="@drawable/edittext_default_bg"
-                style="@style/Texts.EditTexts"/>
+                style="@style/EditTexts.Texts" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/date"
                     android:background="@drawable/edittext_default_bg"
-                    style="@style/Texts.EditTexts"/>
+                    style="@style/EditTexts.Texts"/>
 
                 <!-- Event time field -->
                 <EditText
@@ -64,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/time"
                     android:background="@drawable/edittext_default_bg"
-                    style="@style/Texts.EditTexts"/>
+                    style="@style/EditTexts.Texts"/>
 
             </LinearLayout>
 

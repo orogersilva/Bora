@@ -1,7 +1,6 @@
 package com.orogersilva.bora.fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -16,6 +15,11 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.places.Places;
 import com.orogersilva.bora.R;
 import com.orogersilva.bora.interfaces.OnDatePickerFragmentListener;
 import com.orogersilva.bora.interfaces.OnFragmentTransactionListener;
@@ -25,12 +29,14 @@ import com.orogersilva.bora.interfaces.OnTimePickerFragmentListener;
  * Created by RogerSilva on 7/28/2015.
  */
 public class EventCreationFragment extends Fragment
-    implements OnDatePickerFragmentListener, OnTimePickerFragmentListener {
+    implements OnDatePickerFragmentListener, OnTimePickerFragmentListener,
+        ConnectionCallbacks, OnConnectionFailedListener {
 
     public static final String TAG = "EventCreationFragment";
 
     // region INSTANCE VARIABLES
 
+    private GoogleApiClient mGoogleApiClient;
     private OnFragmentTransactionListener mTransactionListener;
     private EditText eventDateEditText;
     private EditText eventTimeEditText;
@@ -69,6 +75,20 @@ public class EventCreationFragment extends Fragment
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(getActivity())
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View fragmentView = inflater.inflate(R.layout.fragment_event_creation, container, false);
@@ -101,11 +121,27 @@ public class EventCreationFragment extends Fragment
     }
 
     @Override
+    public void onStart() {
+
+        super.onStart();
+
+        mGoogleApiClient.connect();
+    }
+
+    @Override
     public void onResume() {
 
         super.onResume();
 
         Log.d(TAG, TAG + " onResumed.");
+    }
+
+    @Override
+    public void onStop() {
+
+        mGoogleApiClient.disconnect();
+
+        super.onStop();
     }
 
     // endregion
@@ -125,6 +161,18 @@ public class EventCreationFragment extends Fragment
     public void onTimeSet(String time) {
 
         eventTimeEditText.setText(time);
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
     }
 
     // endregion

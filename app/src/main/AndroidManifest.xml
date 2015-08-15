@@ -11,8 +11,12 @@
         android:theme="@style/AppTheme" >
 
         <meta-data
-            android:name="com.google.android.geo.AIzaSyAVC62OMPnjx5FLvP5JLmBBCI5Tx87Z1oM"
-            android:value="AIzaSyAVC62OMPnjx5FLvP5JLmBBCI5Tx87Z1oM"/>
+            android:name="com.google.android.geo.AIzaSyC8uXqxYd0xTywoxJnWj4vcz78ck8dmNto"
+            android:value="AIzaSyC8uXqxYd0xTywoxJnWj4vcz78ck8dmNto"/>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="18675801ce19bc7403152fb89f1a2ebf672faa4b" />
 
         <activity
             android:name=".activities.MainActivity"
@@ -22,9 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="18675801ce19bc7403152fb89f1a2ebf672faa4b" />
+
     </application>
 
 </manifest>

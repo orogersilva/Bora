@@ -2,9 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply from: '../jacoco.gradle'
 
-// Manifest version information
-def versionMajor = 0
-def versionMinor = 1
+// Versioning Information
+def versionMajor = 0        // Changes visible to the user
+def versionMinor = 1        // Other changes
 
 android {
     compileSdkVersion 22

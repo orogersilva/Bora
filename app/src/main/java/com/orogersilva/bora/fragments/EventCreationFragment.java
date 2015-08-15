@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2015 Roger Silva
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 package com.orogersilva.bora.fragments;
 
 import android.app.Activity;
@@ -8,7 +24,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -18,8 +38,13 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.orogersilva.bora.R;
+import com.orogersilva.bora.adapters.PlaceAutocompleteAdapter;
 import com.orogersilva.bora.interfaces.OnDatePickerFragmentListener;
 import com.orogersilva.bora.interfaces.OnFragmentTransactionListener;
 import com.orogersilva.bora.interfaces.OnTimePickerFragmentListener;
@@ -27,6 +52,7 @@ import com.orogersilva.bora.interfaces.OnTimePickerFragmentListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 
 /**
  * Created by RogerSilva on 7/28/2015.
@@ -37,12 +63,37 @@ public class EventCreationFragment extends Fragment
 
     public static final String TAG = "EventCreationFragment";
 
+    private static final LatLngBounds BOUNDS_PORTOALEGRE = new LatLngBounds(
+            new LatLng(-30.081245, -51.135085), new LatLng(-30.026270, -51.220744));
+
+    private PlaceAutocompleteAdapter mAdapter;
+
     // region INSTANCE VARIABLES
 
     @Bind(R.id.event_date_edittext) EditText eventDateEditText;
     @Bind(R.id.event_time_edittext) EditText eventTimeEditText;
+    // @Bind(R.id.event_place_autocompletetextview) AutoCompleteTextView eventPlaceAutocompleteTextView;
+    private AutoCompleteTextView eventPlaceAutocompleteTextView;
+
     private GoogleApiClient mGoogleApiClient;
     private OnFragmentTransactionListener mTransactionListener;
+
+    private OnItemClickListener mAutoCompleteClickListener =
+            new AdapterView.OnItemClickListener() {
+
+        @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            final PlaceAutocompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                    .getPlaceById(mGoogleApiClient, placeId);
+            // placeResult.setResultCallback();
+
+            Toast.makeText(getActivity(), "Clicked: " + item.description,
+                    Toast.LENGTH_SHORT).show();
+        }
+    };
 
     // endregion
 
@@ -83,7 +134,6 @@ public class EventCreationFragment extends Fragment
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
                 .addApi(Places.GEO_DATA_API)
-                .addApi(Places.PLACE_DETECTION_API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -94,6 +144,13 @@ public class EventCreationFragment extends Fragment
         View fragmentView = inflater.inflate(R.layout.fragment_event_creation, container, false);
 
         ButterKnife.bind(this, fragmentView);
+
+        eventPlaceAutocompleteTextView = (AutoCompleteTextView) fragmentView.findViewById(R.id.event_place_autocompletetextview);
+        eventPlaceAutocompleteTextView.setOnItemClickListener(mAutoCompleteClickListener);
+
+        mAdapter = new PlaceAutocompleteAdapter(getActivity(), android.R.layout.simple_list_item_1,
+                mGoogleApiClient, BOUNDS_PORTOALEGRE, null);
+        eventPlaceAutocompleteTextView.setAdapter(mAdapter);
 
         return fragmentView;
     }
@@ -108,8 +165,6 @@ public class EventCreationFragment extends Fragment
     @Override public void onResume() {
 
         super.onResume();
-
-        Log.d(TAG, TAG + " onResumed.");
     }
 
     @Override public void onStop() {
@@ -145,6 +200,20 @@ public class EventCreationFragment extends Fragment
                 getTimePickerFragmentListener());
         timePickerFragment.show(getFragmentManager(), TimePickerFragment.TAG);
     }
+
+    /*@OnItemClick(R.id.event_place_autocompletetextview)
+    public void selectPlaceSuggestion(int position) {
+
+        final PlaceAutocompleteAdapter.PlaceAutocomplete item = mAdapter.getItem(position);
+        final String placeId = String.valueOf(item.placeId);
+
+        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                .getPlaceById(mGoogleApiClient, placeId);
+        // placeResult.setResultCallback();
+
+        Toast.makeText(getActivity(), "Clicked: " + item.description,
+                Toast.LENGTH_SHORT).show();
+    }*/
 
     // endregion
 

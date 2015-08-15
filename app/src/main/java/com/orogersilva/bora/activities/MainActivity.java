@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
 import com.orogersilva.bora.R;
 import com.orogersilva.bora.fragments.HomeFragment;
 import com.orogersilva.bora.interfaces.OnFragmentTransactionListener;
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends ActionBarActivity
     implements OnFragmentTransactionListener {
@@ -39,6 +41,7 @@ public class MainActivity extends ActionBarActivity
     @Override protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
 
         goTo(new HomeFragment(), HomeFragment.TAG);

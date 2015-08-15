@@ -1,5 +1,5 @@
 # Bora
-Repositório para a aplicação Android sobre divulgação de eventos
+Aplicação Android para divulgação de eventos.
 
 License
 -------

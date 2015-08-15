@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.orogersilva.bora" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,5 +27,4 @@
             android:value="18675801ce19bc7403152fb89f1a2ebf672faa4b" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

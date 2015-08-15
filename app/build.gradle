@@ -5,8 +5,6 @@ apply from: '../jacoco.gradle'
 // Manifest version information
 def versionMajor = 0
 def versionMinor = 1
-def versionPatch = 0
-def versionBuild = 0
 
 android {
     compileSdkVersion 22
@@ -17,12 +15,14 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
 
-        versionCode versionMajor * 1000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
-        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
+        versionCode versionMajor * 100 + versionMinor
+        versionName "${versionMajor}.${versionMinor}"
     }
 
     buildTypes {
+
         debug {
+            applicationIdSuffix ".debug"
             testCoverageEnabled = false
         }
         release {

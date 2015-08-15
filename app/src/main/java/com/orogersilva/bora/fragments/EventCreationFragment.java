@@ -25,6 +25,10 @@ import com.orogersilva.bora.interfaces.OnDatePickerFragmentListener;
 import com.orogersilva.bora.interfaces.OnFragmentTransactionListener;
 import com.orogersilva.bora.interfaces.OnTimePickerFragmentListener;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by RogerSilva on 7/28/2015.
  */
@@ -36,10 +40,10 @@ public class EventCreationFragment extends Fragment
 
     // region INSTANCE VARIABLES
 
+    @Bind(R.id.event_date_edittext) EditText eventDateEditText;
+    @Bind(R.id.event_time_edittext) EditText eventTimeEditText;
     private GoogleApiClient mGoogleApiClient;
     private OnFragmentTransactionListener mTransactionListener;
-    private EditText eventDateEditText;
-    private EditText eventTimeEditText;
 
     // endregion
 
@@ -59,8 +63,7 @@ public class EventCreationFragment extends Fragment
 
     // region FRAGMENT LIFECYCLE METHODS
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
 
         super.onAttach(activity);
 
@@ -74,8 +77,7 @@ public class EventCreationFragment extends Fragment
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
 
@@ -88,68 +90,68 @@ public class EventCreationFragment extends Fragment
                 .build();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View fragmentView = inflater.inflate(R.layout.fragment_event_creation, container, false);
 
-        eventTimeEditText = (EditText) fragmentView.findViewById(R.id.event_time_edittext);
-        eventTimeEditText.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment timePickerFragment = TimePickerFragment.newInstance(
-                        getTimePickerFragmentListener());
-                timePickerFragment.show(getFragmentManager(), TimePickerFragment.TAG);
-            }
-        });
-
-        eventDateEditText = (EditText) fragmentView.findViewById(R.id.event_date_edittext);
-        eventDateEditText.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                DialogFragment datePickerFragment = DatePickerFragment.newInstance(
-                        getDatePickerFragmentListener());
-                datePickerFragment.show(getFragmentManager(), DatePickerFragment.TAG);
-            }
-        });
+        ButterKnife.bind(this, fragmentView);
 
         return fragmentView;
     }
 
-    @Override
-    public void onStart() {
+    @Override public void onStart() {
 
         super.onStart();
 
         mGoogleApiClient.connect();
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
 
         super.onResume();
 
         Log.d(TAG, TAG + " onResumed.");
     }
 
-    @Override
-    public void onStop() {
+    @Override public void onStop() {
 
         mGoogleApiClient.disconnect();
 
         super.onStop();
     }
 
+    @Override public void onDestroyView() {
+
+        super.onDestroyView();
+
+        ButterKnife.unbind(this);
+    }
+
+    // endregion
+
+    // region BUTTERKNIFE METHODS
+
+    @OnClick(R.id.event_date_edittext)
+    public void showEventDateDialog() {
+
+        DialogFragment datePickerFragment = DatePickerFragment.newInstance(
+                getDatePickerFragmentListener());
+        datePickerFragment.show(getFragmentManager(), DatePickerFragment.TAG);
+    }
+
+    @OnClick(R.id.event_time_edittext)
+    public void showEventTimeDialog() {
+
+        DialogFragment timePickerFragment = TimePickerFragment.newInstance(
+                getTimePickerFragmentListener());
+        timePickerFragment.show(getFragmentManager(), TimePickerFragment.TAG);
+    }
+
     // endregion
 
     // region OVERRIDES METHODS
 
-    @Override
-    public void onDateSet(Date date) {
+    @Override public void onDateSet(Date date) {
 
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
         String formattedDate = dateFormat.format(date);
@@ -157,22 +159,18 @@ public class EventCreationFragment extends Fragment
         eventDateEditText.setText(formattedDate);
     }
 
-    @Override
-    public void onTimeSet(String time) {
+    @Override public void onTimeSet(String time) {
 
         eventTimeEditText.setText(time);
     }
 
-    @Override
-    public void onConnected(Bundle bundle) {
+    @Override public void onConnected(Bundle bundle) {
     }
 
-    @Override
-    public void onConnectionSuspended(int i) {
+    @Override public void onConnectionSuspended(int i) {
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
+    @Override public void onConnectionFailed(ConnectionResult connectionResult) {
     }
 
     // endregion

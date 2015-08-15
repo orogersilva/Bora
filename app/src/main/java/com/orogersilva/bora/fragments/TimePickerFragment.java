@@ -41,8 +41,7 @@ public class TimePickerFragment extends DialogFragment
 
     // region OVERRIDES METHODS
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
@@ -52,8 +51,7 @@ public class TimePickerFragment extends DialogFragment
                 DateFormat.is24HourFormat(getActivity()));
     }
 
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+    @Override public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
         String time = hourOfDay + ":" + minute;
 
@@ -75,8 +73,10 @@ public class TimePickerFragment extends DialogFragment
 
     public void notifyTimePickerListener(String time) {
 
-        if (mTimePickerFragmentListener != null)
+        if (mTimePickerFragmentListener != null) {
+
             mTimePickerFragmentListener.onTimeSet(time);
+        }
     }
 
     // endregion

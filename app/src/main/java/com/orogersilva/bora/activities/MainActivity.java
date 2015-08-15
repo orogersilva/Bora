@@ -23,8 +23,7 @@ public class MainActivity extends ActionBarActivity
 
     // region IMPLEMENTED INTERFACE METHODS
 
-    @Override
-    public void goTo(Fragment targetFragment, String tag) {
+    @Override public void goTo(Fragment targetFragment, String tag) {
 
         getFragmentManager()
                 .beginTransaction()
@@ -37,8 +36,7 @@ public class MainActivity extends ActionBarActivity
 
     // region ACTIVITY LIFECYCLE METHODS
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -46,8 +44,7 @@ public class MainActivity extends ActionBarActivity
         goTo(new HomeFragment(), HomeFragment.TAG);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
 
         super.onResume();
 
@@ -58,15 +55,13 @@ public class MainActivity extends ActionBarActivity
 
     // region OVERRIDE METHODS
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -80,8 +75,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
+    @Override public void onBackPressed() {
 
         getFragmentManager().popBackStack();
 

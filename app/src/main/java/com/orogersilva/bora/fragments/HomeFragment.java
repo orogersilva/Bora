@@ -13,6 +13,10 @@ import android.widget.Button;
 import com.orogersilva.bora.R;
 import com.orogersilva.bora.interfaces.OnFragmentTransactionListener;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * Created by RogerSilva on 7/26/2015.
  */
@@ -22,14 +26,14 @@ public class HomeFragment extends Fragment {
 
     // region INSTANCE VARIABLES
 
+    @Bind(R.id.create_event_button) Button mCreateEventButton;
     private OnFragmentTransactionListener mTransactionListener;
 
     // endregion
 
     // region FRAGMENT LIFECYCLE METHODS
 
-    @Override
-    public void onAttach(Activity activity) {
+    @Override public void onAttach(Activity activity) {
 
         super.onAttach(activity);
 
@@ -43,30 +47,36 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View fragmentView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button createEventButton = (Button) fragmentView.findViewById(R.id.create_event_button);
-        createEventButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                mTransactionListener.goTo(new EventCreationFragment(), EventCreationFragment.TAG);
-            }
-        });
+        ButterKnife.bind(this, fragmentView);
 
         return fragmentView;
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
 
         super.onResume();
 
         Log.d(TAG, TAG + " onResumed.");
+    }
+
+    @Override public void onDestroyView() {
+
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+    }
+
+    // endregion
+
+    // region BUTTERKNIFE METHODS
+
+    @OnClick(R.id.create_event_button)
+    public void onCreateEvent() {
+
+        mTransactionListener.goTo(new EventCreationFragment(), EventCreationFragment.TAG);
     }
 
     // endregion

@@ -40,8 +40,7 @@ public class DatePickerFragment extends DialogFragment
 
     // region OVERRIDES METHODS
 
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -51,8 +50,7 @@ public class DatePickerFragment extends DialogFragment
         return new DatePickerDialog(getActivity(), this, year, month, day);
     }
 
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int day) {
+    @Override public void onDateSet(DatePicker view, int year, int month, int day) {
 
         Calendar c = Calendar.getInstance();
         c.set(year, month, day);

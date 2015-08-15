@@ -24,21 +24,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // endregion
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
+    @Override public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(EventEntry.SQL_CREATE_TABLE);
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL(EventEntry.SQL_DROP_TABLE);
         onCreate(db);
     }
 
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+    @Override public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         onUpgrade(db, oldVersion, newVersion);
     }
